@@ -1,13 +1,14 @@
 <?php
-
 $servername = "localhost";
-$username = "root";
-$password = "";
-$database = "mananggit";
+$username = "root"; // Change if using a different user
+$password = ""; // Add password if set
+$dbname = "lusterio_solangon"; // Change to your DB name
 
-$conn = new mysqli($servername, $username, $password, $database);
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-if ($conn -> connect_error){
-    
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 ?>
