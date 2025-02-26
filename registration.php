@@ -29,19 +29,18 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 </head>
+<?php session_start()?>
 
 <body>
 
   <main>
     <div class="container">
-
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
               <div class="card mb-3">
-
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
@@ -54,25 +53,25 @@
                     <div class="col-12">
                       <label for="firstName" class="form-label">First Name</label>
                       <input type="text" name="firstName" class="form-control" id="firstName" required>
-                      <div class="invalid-feedback">Please enter First Name!</div>
+                      <div class="invalid-feedback">Please enter your first name!</div>
                     </div>
 
                     <div class="col-12">
                       <label for="lastName" class="form-label">Last Name</label>
                       <input type="text" name="lastName" class="form-control" id="lastName" required>
-                      <div class="invalid-feedback">Please enter Last Name!</div>
+                      <div class="invalid-feedback">Please enter your last name!</div>
                     </div>
 
                     <div class="col-12">
                       <label for="email" class="form-label">Email Address</label>
                       <input type="email" name="email" class="form-control" id="email" required>
-                      <div class="invalid-feedback">Please enter Email Address!</div>
+                      <div class="invalid-feedback">Please enter your email address!</div>
                     </div>
 
                     <div class="col-12">
                       <label for="password" class="form-label">Password</label>
                       <input type="password" name="password" class="form-control" id="password" required>
-                      <div class="invalid-feedback">Please enter password!</div>
+                      <div class="invalid-feedback">Please enter a password!</div>
                     </div>
 
                     <div class="col-12">
@@ -84,22 +83,24 @@
                     <div class="col-12">
                       <label for="phoneNumber" class="form-label">Phone Number</label>
                       <input type="tel" name="phone_number" class="form-control" id="phoneNumber" required>
-                      <div class="invalid-feedback">Please enter Phone Number!</div>
+                      <div class="invalid-feedback">Please enter your phone number!</div>
                     </div>
 
+                    <!-- Gender Dropdown with Validation -->
                     <div class="col-12">
-                      <label class="form-label">Gender</label>
-                      <select class="form-select" name="gender" aria-label="Gender selection" required>
-                        <option selected disabled>Select Gender</option>
+                      <label for="gender" class="form-label">Gender</label>
+                      <select class="form-select" name="gender" id="gender" required>
+                        <option value="" selected disabled>Select Gender</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                       </select>
+                      <div class="invalid-feedback">Please select your gender!</div>
                     </div>
 
                     <div class="col-12">
                       <label for="inputDate" class="form-label">Birthday</label>
                       <input type="date" class="form-control" id="inputDate" name="birthday" required>
-                      <div class="invalid-feedback">Please enter your Birthday!</div>
+                      <div class="invalid-feedback">Please enter your birthday!</div>
                     </div>
 
                     <div class="col-12">
@@ -118,9 +119,7 @@
             </div>
           </div>
         </div>
-
       </section>
-
     </div>
   </main>
 
@@ -135,10 +134,50 @@
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <?php
+  if(isset($_SESSION['message']) && $_SESSION['code'] !='') {
+      ?>
+      <script>
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "<?php echo $_SESSION['code']; ?>",
+          title: "<?php echo $_SESSION['message']; ?>"
+        });
+      </script>
+      <?php
+      unset($_SESSION['message']);
+      unset($_SESSION['code']);
+  }     
+?>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
-</body>
+  <!-- JavaScript for Gender Validation -->
+  <script>
+    document.querySelector("form").addEventListener("submit", function(event) {
+      var genderSelect = document.getElementById("gender");
 
+      if (genderSelect.value === "") {
+        genderSelect.classList.add("is-invalid");
+        event.preventDefault(); // Prevent form submission
+      } else {
+        genderSelect.classList.remove("is-invalid");
+      }
+    });
+  </script>
+
+</body>
 </html>
