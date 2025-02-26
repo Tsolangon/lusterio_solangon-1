@@ -35,6 +35,7 @@
 
 </head>
 
+
 <body>
 
   <main>
@@ -51,7 +52,7 @@
                     <p class="text-center small">Enter your Email & password to login</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" method="POST" action="process_login.php">
+                  <form method="POST" action="./controller/login.php" class="row g-3 needs-validation" novalidate>
                     <div class="col-12">
                       <label for="email" class="form-label">Email Address</label>
                       <input type="email" name="email" class="form-control" id="email" required>
@@ -65,12 +66,13 @@
                     </div>
 
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Login</button>
+                      <button class="btn btn-primary w-100" type="submit" name='login'>Login</button>
                     </div>
                     <div class="col-12">
                       <p class="small mb-0">Don't have an account? <a href="./registration.php">Create an account</a></p>
                     </div>
                   </form>
+                  <!-- End Corrected Form -->
 
                 </div>
               </div>
