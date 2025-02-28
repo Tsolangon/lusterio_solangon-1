@@ -28,89 +28,109 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-</head>
-<?php session_start()?>
 
+  <!-- =======================================================
+  * Template Name: NiceAdmin
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Updated: Apr 20 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+<?php session_start(); ?>
 <body>
 
   <main>
     <div class="container">
+
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
               <div class="card mb-3">
+
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
-                    <p class="text-center small">Enter your personal details to create an account</p>
+                    <p class="text-center small">Enter your personal details to create account</p>
                   </div>
 
                   <form class="row g-3 needs-validation" action="./controller/registration.php" method="POST" novalidate>
-                    
+
                     <div class="col-12">
-                      <label for="firstName" class="form-label">First Name</label>
-                      <input type="text" name="firstName" class="form-control" id="firstName" required>
-                      <div class="invalid-feedback">Please enter your first name!</div>
+                      <label for="yourName" class="form-label">First Name</label>
+                      <input type="text" name="firstName" class="form-control" id="yourName" required>
+                      <div class="invalid-feedback">Please, enter your first name!</div>
                     </div>
 
                     <div class="col-12">
-                      <label for="lastName" class="form-label">Last Name</label>
-                      <input type="text" name="lastName" class="form-control" id="lastName" required>
+                      <label for="yourName" class="form-label">Last Name </label>
+                      <input type="text" name="lastName" class="form-control" id="yourEmail" required>
                       <div class="invalid-feedback">Please enter your last name!</div>
                     </div>
 
                     <div class="col-12">
-                      <label for="email" class="form-label">Email Address</label>
-                      <input type="email" name="email" class="form-control" id="email" required>
-                      <div class="invalid-feedback">Please enter your email address!</div>
+                      <label for="yourEmail" class="form-label">Email Address </label>
+                      <div class="input-group has-validation">
+                        <input type="email" name="email" class="form-control" id="yourUsername" required>
+                        <div class="invalid-feedback">Please choose a email address!</div>
+                      </div>
                     </div>
 
                     <div class="col-12">
-                      <label for="password" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="password" required>
-                      <div class="invalid-feedback">Please enter a password!</div>
+                      <label for="yourpassword" class="form-label">Password</label>
+                      <input type="password" name="password" class="form-control" id="yourPassword" required>
+                      <div class="invalid-feedback">Please enter your password!</div>
                     </div>
 
                     <div class="col-12">
-                      <label for="confirmPassword" class="form-label">Confirm Password</label>
-                      <input type="password" name="cPassword" class="form-control" id="confirmPassword" required>
+                      <label for="yourcpassword" class="form-label">Confirm Password</label>
+                      <input type="password" name="cpassword" class="form-control" id="yourPassword" required>
                       <div class="invalid-feedback">Please confirm your password!</div>
                     </div>
 
-                    <div class="col-12">
-                      <label for="phoneNumber" class="form-label">Phone Number</label>
-                      <input type="tel" name="phone_number" class="form-control" id="phoneNumber" required>
-                      <div class="invalid-feedback">Please enter your phone number!</div>
-                    </div>
-
-                    <!-- Gender Dropdown with Validation -->
-                    <div class="col-12">
-                      <label for="gender" class="form-label">Gender</label>
-                      <select class="form-select" name="gender" id="gender" required>
-                        <option value="" selected disabled>Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                      </select>
-                      <div class="invalid-feedback">Please select your gender!</div>
-                    </div>
 
                     <div class="col-12">
-                      <label for="inputDate" class="form-label">Birthday</label>
-                      <input type="date" class="form-control" id="inputDate" name="birthday" required>
-                      <div class="invalid-feedback">Please enter your birthday!</div>
+                      <label for="yourphoneNumber" class="form-label">Phone Number</label>
+                      <div class="input-group has-validation">
+                        <input type="text" name="phoneNumber" class="form-control" id="yourUsername" 
+                              pattern="09[0-9]{9}" minlength="11" maxlength="11" required>
+                        <div class="invalid-feedback">Please enter a valid 11-digit phone number!</div>
+                      </div>
                     </div>
+
+                    
+                    <div class = "col-12">
+                      <div class="row mb-3">
+                        <label class="col-lg-3 col-form-label">Gender</label>
+                        <div class="col-lg-9">
+                          <select class="form-select" name="gender" aria-label="Default select example" required>>
+                            <option selected disabled>Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class = "col-12">
+                      <div class="row mb-3">
+                      <label for="inputDate" class="col-sm-3 col-form-label">Birthday </label>
+                      <div class = "col-lg-9">
+                        <input type = "date" class = "form-control" name="birthday" required>
+                      </div>
+                      </div>
+                    </div>
+                    
 
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit" name="registration">Create Account</button>
                     </div>
-
                     <div class="col-12">
                       <p class="small mb-0">Already have an account? <a href="./login.php">Log in</a></p>
                     </div>
-
                   </form>
 
                 </div>
@@ -121,7 +141,7 @@
         </div>
       </section>
     </div>
-  </main>
+  </main><!-- End #main -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -161,23 +181,9 @@
       unset($_SESSION['code']);
   }     
 ?>
-
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
-  <!-- JavaScript for Gender Validation -->
-  <script>
-    document.querySelector("form").addEventListener("submit", function(event) {
-      var genderSelect = document.getElementById("gender");
-
-      if (genderSelect.value === "") {
-        genderSelect.classList.add("is-invalid");
-        event.preventDefault(); // Prevent form submission
-      } else {
-        genderSelect.classList.remove("is-invalid");
-      }
-    });
-  </script>
-
 </body>
+
 </html>

@@ -7,21 +7,21 @@ if (isset($_POST['registration'])) {
     $lastName = $_POST['lastName'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $confirmPassword = $_POST['cPassword'];
-    $phoneNumber = $_POST['phone_number'];
+    $confirmPassword = $_POST['cpassword'];
+    $phoneNumber = $_POST['phoneNumber'];
     $gender = $_POST['gender'];
     $birthday = $_POST['birthday'];
 
     // Validate if confirm password and password match
     if ($password != $confirmPassword) {
-        $_SESSION['message'] = "Password and Confirm Password do not match";
+        $_SESSION['message'] = "Password do not match";
         $_SESSION['code'] = "error";
         header("location:../registration.php");
-        exit(0);
+        exit();
     }
 
     // Validate if email already exists
-    $query = "SELECT `email` FROM `users` WHERE `email` = '$email'";
+    $query = "SELECT email FROM users WHERE email = '$email'";
     $result = mysqli_query($conn, $query);
 
     if (mysqli_num_rows($result) > 0) {
@@ -32,7 +32,7 @@ if (isset($_POST['registration'])) {
     }
 
     // Insert user data into the database
-    $query = "INSERT INTO `users`(`firstName`, `lastName`, `email`, `password`, `phoneNumber`, `gender`, `birthday`) 
+    $query = "INSERT INTO users (firstName, lastName, email, password, phoneNumber, gender, birthday) 
               VALUES ('$firstName','$lastName','$email','$password','$phoneNumber','$gender','$birthday')";
 
     if (mysqli_query($conn, $query)) {
