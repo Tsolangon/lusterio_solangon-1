@@ -3,7 +3,7 @@
     .logo span {
       color: #735240; /* Updated font color */
       font-family: 'cursive'; 
-      font-weight: bold;
+      font-weight: 800;
     }
 
     .nav-icon i,

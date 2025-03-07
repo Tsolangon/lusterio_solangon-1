@@ -23,7 +23,6 @@
 
   .sidebar-nav .nav-item a {
     color: #735240 !important; /* Match text color */
-    font-weight: bold;
     padding: 12px 15px;
     display: flex;
     align-items: center;
@@ -46,10 +45,22 @@
     box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.1);
     transform: translateX(5px);
   }
+
+  /* Greeting Message (Now aligned to the left) */
+  .greeting {
+    font-size: 20px;
+    font-weight: 500;
+    font-family: Georgia, serif;
+    color: #735240;
+    margin: 9px 0 9px 5px; /* Moves text closer to the left */
+    text-align: left;
+  }
 </style>
 
 <!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
+  <div class="greeting" id="greetingMessage"></div> <!-- Greeting Message -->
+
   <ul class="sidebar-nav" id="sidebar-nav">
     
     <li class="nav-item">
@@ -91,3 +102,22 @@
 </aside><!-- End Sidebar -->
 
 <main id="main" class="main">
+
+<script>
+    function getGreeting() {
+        let hour = new Date().getHours();
+        let greeting = "";
+
+        if (hour < 12) {
+            greeting = "Hi, Good Morning!";
+        } else if (hour >= 12 && hour < 18) {
+            greeting = "Hi, Good Afternoon!";
+        } else {
+            greeting = "Hi, Good Evening!";
+        }
+
+        document.getElementById("greetingMessage").innerText = greeting;
+    }
+
+    getGreeting(); // Call function to set greeting message
+</script>
