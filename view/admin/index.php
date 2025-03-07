@@ -1,5 +1,3 @@
-admin dash
-
 <?php
 include("./includes/header.php");
 include("./includes/topbar.php");
@@ -17,13 +15,36 @@ include("./includes/sidebar.php");
         padding: 20px;
         min-height: 100vh;
         margin-left: 250px; /* Adjust according to sidebar width */
+        margin-top: 70px; /* Fix extra spacing issue */
     }
 
     /* Page Title */
-    .pagetitle h1 {
+    .pagetitle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0;
         color: #735240;
+    }
+
+    .pagetitle h1 {
+        color: #735240 !important; /* Ensures the correct color */
         font-weight: bold;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
+    }
+
+    /* Dashboard Cards Layout - One Line */
+    .dashboard .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between; /* Align cards in one row */
+        gap: 20px;
+    }
+
+    .card-container {
+        display: flex;
+        justify-content: space-between; /* Align horizontally */
+        width: 100%;
     }
 
     /* Card Styling */
@@ -34,6 +55,8 @@ include("./includes/sidebar.php");
         border: none;
         padding: 15px;
         transition: transform 0.3s ease;
+        flex: 1; /* Makes cards equal width */
+        margin: 10px;
     }
 
     .card:hover {
@@ -65,6 +88,7 @@ include("./includes/sidebar.php");
         border-radius: 12px;
         padding: 20px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
     }
 
     /* Sidebar Fix */
@@ -76,11 +100,11 @@ include("./includes/sidebar.php");
         border-right: 2px solid #E0D6D6;
     }
 
-    /* Fix Main Content Overflow */
-    .dashboard .row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
+    /* Responsive Design */
+    @media (max-width: 992px) {
+        .card-container {
+            flex-direction: column; /* Stack cards on smaller screens */
+        }
     }
 </style>
 
@@ -90,56 +114,49 @@ include("./includes/sidebar.php");
     </div><!-- End Page Title -->
 
     <section class="dashboard">
-        <div class="row">
-
+        <div class="card-container">
             <!-- Dashboard Cards -->
-            <div class="col-lg-4 col-md-6">
-                <div class="card info-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Products</h5>
-                        <div class="d-flex align-items-center">
-                            <i class="bi bi-box-seam icon"></i>
-                            <h3>120</h3>
-                        </div>
+            <div class="card info-card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Products</h5>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-box-seam icon"></i>
+                        <h3>120</h3>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6">
-                <div class="card info-card">
-                    <div class="card-body">
-                        <h5 class="card-title">New Orders</h5>
-                        <div class="d-flex align-items-center">
-                            <i class="bi bi-cart-plus icon"></i>
-                            <h3>15</h3>
-                        </div>
+            <div class="card info-card">
+                <div class="card-body">
+                    <h5 class="card-title">New Orders</h5>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-cart-plus icon"></i>
+                        <h3>15</h3>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6">
-                <div class="card info-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Completed Orders</h5>
-                        <div class="d-flex align-items-center">
-                            <i class="bi bi-check-circle icon"></i>
-                            <h3>75</h3>
-                        </div>
+            <div class="card info-card">
+                <div class="card-body">
+                    <h5 class="card-title">Completed Orders</h5>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-check-circle icon"></i>
+                        <h3>75</h3>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Order History Chart -->
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Monthly Sales</h5>
-                        <canvas id="salesChart"></canvas>
-                    </div>
+        <!-- Order History Chart -->
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Monthly Sales</h5>
+                    <canvas id="salesChart"></canvas>
                 </div>
-            </div><!-- End Sales Chart -->
+            </div>
+        </div><!-- End Sales Chart -->
 
-        </div><!-- End Row -->
     </section>
 </main><!-- End Main -->
 
