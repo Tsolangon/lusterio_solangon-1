@@ -1,3 +1,55 @@
+<?php
+include ("../../../dB/config.php");
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $product_name = $_POST['product_name'];
+    $product_desc = $_POST['product_desc'];
+    $product_price = $_POST['product_price'];
+    $stock_quantity = $_POST['stock_quantity'];
+    $size_options = $_POST['size_options'];
+    $tags = $_POST['tags'];
+
+    // Handle image upload
+    $target_dir = "uploads/";
+    $image_paths = [];
+
+    if (!file_exists($target_dir)) {
+        mkdir($target_dir, 0777, true);
+    }
+
+    foreach ($_FILES['product_images']['tmp_name'] as $key => $tmp_name) {
+        if (!empty($_FILES["product_images"]["name"][$key])) { // Check if file is selected
+            $file_name = basename($_FILES["product_images"]["name"][$key]);
+            $target_file = $target_dir . time() . "_" . $file_name; // Prevent duplicate file names
+
+            if (move_uploaded_file($_FILES["product_images"]["tmp_name"][$key], $target_file)) {
+                $image_paths[] = $target_file;
+            }
+        }
+    }
+
+    // Convert image paths array to JSON
+    $image_paths_json = json_encode($image_paths);
+
+    // Insert data into database
+    $sql = "INSERT INTO products (name, description, price, stock, size, tags, images, created_at) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssdisss", $product_name, $product_desc, $product_price, $stock_quantity, $size_options, $tags, $image_paths_json);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Product added successfully!'); window.location.href='add_product.php';</script>";
+    } else {
+        echo "<script>alert('Error: " . $stmt->error . "');</script>";
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
