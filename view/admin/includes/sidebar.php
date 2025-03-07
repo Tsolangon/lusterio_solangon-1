@@ -90,7 +90,7 @@
       </a>
       <ul id="products-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
         <li>
-          <a href="add-product.html">
+          <a class="nav-link" href="sidebar/newproduct.php">
             <i class="bi bi-plus-circle"></i>
             <span>Add New Product</span>
           </a>
