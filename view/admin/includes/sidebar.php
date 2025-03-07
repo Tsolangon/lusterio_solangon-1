@@ -19,9 +19,9 @@
     .sidebar-nav .nav-item {
       margin-bottom: 10px;
     }
-s
+
     .sidebar-nav .nav-item a {
-      color: #735240 !important; /* Consistent text color */
+      color: #735240 !important; /* Font color updated */
       font-weight: bold;
       display: flex;
       align-items: center;
@@ -37,7 +37,7 @@ s
 
     /* Icons */
     .sidebar-nav .nav-item a i {
-      color: #735240 !important; /* Consistent icon color */
+      color: #735240 !important; /* Icon color updated */
       font-size: 1.2rem;
       margin-right: 10px;
     }
@@ -56,6 +56,7 @@ s
       align-items: center;
       border-radius: 6px;
       transition: background 0.3s ease;
+      color: #735240 !important; /* Font color updated */
     }
     
     .nav-content li a:hover {
