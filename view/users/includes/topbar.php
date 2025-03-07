@@ -207,9 +207,25 @@
           <li><hr class="dropdown-divider"></li>
 
           <li>
-            <a class="dropdown-item d-flex align-items-center" href="#">
-              <i class="bi bi-box-arrow-right"></i>
-              <span>Sign Out</span>
+              <a class="dropdown-item d-flex align-items-center" href="http://localhost/IT322/login.php" onclick="logout()">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+              </a>
+            </li>
+
+            <script>
+              function logout() {
+                // Clear cookies (removes session if stored in cookies)
+                document.cookie.split(";").forEach((c) => {
+                  document.cookie = c
+                    .replace(/^ +/, "")
+                    .replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
+                });
+
+                // Redirect to login page (just in case the href doesn't trigger)
+                window.location.href = "http://localhost/IT322/login.php";
+              }
+            </script>
             </a>
           </li>
         </ul><!-- End Profile Dropdown Items -->

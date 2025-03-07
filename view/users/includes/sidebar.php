@@ -63,42 +63,37 @@
 
   <ul class="sidebar-nav" id="sidebar-nav">
     
-    <li class="nav-item">
-      <a class="nav-link" href="index.html">
-        <i class="bi bi-grid"></i>
-        <span>Dashboard</span>
-      </a>
-    </li><!-- End Dashboard Nav -->
+  <ul class="sidebar-nav" id="sidebar-nav">
+  
+  <li class="nav-item">
+    <a class="nav-link" href="dashboard.html">
+      <i class="bi bi-grid"></i>
+      <span>Dashboard</span>
+    </a>
+  </li><!-- End Dashboard Nav -->
 
-    <li class="nav-item">
-      <a class="nav-link" href="shop.html">
-        <i class="bi bi-bag"></i>
-        <span>Shop</span>
-      </a>
-    </li><!-- End Shop Nav -->
+  <li class="nav-item">
+    <a class="nav-link" href="inventory.html">
+      <i class="bi bi-box"></i>
+      <span>View/Update Inventory</span>
+    </a>
+  </li><!-- End View/Update Inventory Nav -->
 
-    <li class="nav-item">
-      <a class="nav-link" href="my-orders.html">
-        <i class="bi bi-cart-check"></i>
-        <span>My Orders</span>
-      </a>
-    </li><!-- End My Orders Nav -->
+  <li class="nav-item">
+    <a class="nav-link" href="manage-orders.html">
+      <i class="bi bi-cart-check"></i>
+      <span>Manage Order</span>
+    </a>
+  </li><!-- End Manage Order Nav -->
 
-    <li class="nav-item">
-      <a class="nav-link" href="wishlist.html">
-        <i class="bi bi-heart"></i>
-        <span>Wishlist</span>
-      </a>
-    </li><!-- End Wishlist Nav -->
+  <li class="nav-item">
+    <a class="nav-link" href="analytics.html">
+      <i class="bi bi-bar-chart"></i>
+      <span>Analytics</span>
+    </a>
+  </li><!-- End Analytics Nav -->
 
-    <li class="nav-item">
-      <a class="nav-link" href="about-us.html">
-        <i class="bi bi-info-circle"></i>
-        <span>About Us</span>
-      </a>
-    </li><!-- End About Us Nav -->
-
-  </ul>
+</ul>
 </aside><!-- End Sidebar -->
 
 <main id="main" class="main">
