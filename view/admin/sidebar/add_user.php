@@ -5,19 +5,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $firstName = trim($_POST["first_name"]);
     $lastName = trim($_POST["last_name"]);
     $email = trim($_POST["email"]);
-    $password = password_hash($_POST["password"], PASSWORD_BCRYPT); // Encrypt password
+    $password = trim($_POST["password"]); // Storing password as plaintext (Not recommended)
     $phoneNumber = trim($_POST["phone"]);
     $gender = $_POST["gender"];
     $birthday = $_POST["birthday"];
-    $role = $_POST["role"];
+    $role = strtolower(trim($_POST["role"]));
     $verification = 0; // Default value for new users
 
-    // Insert into users table
-    $sql = "INSERT INTO users (firstName, lastName, email, password, phoneNumber, gender, birthday, role, verification, createdAt) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+    // Get the last user ID from the database
+    $result = $conn->query("SELECT MAX(userId) as last_id FROM users");
+    $row = $result->fetch_assoc();
+    $nextUserId = $row['last_id'] ? $row['last_id'] + 1 : 1; // If no users exist, start from 1
+
+    // Insert into users table with a manually assigned ID
+    $sql = "INSERT INTO users (userId, firstName, lastName, email, password, phoneNumber, gender, birthday, role, verification, createdAt) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
     
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssssi", $firstName, $lastName, $email, $password, $phoneNumber, $gender, $birthday, $role, $verification);
+    $stmt->bind_param("issssssssi", $nextUserId, $firstName, $lastName, $email, $password, $phoneNumber, $gender, $birthday, $role, $verification);
 
     if ($stmt->execute()) {
         echo "<div class='alert alert-success'>User registered successfully!</div>";
@@ -30,6 +35,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit();
 }
 ?>
+
+
+
 
 <div class="container mt-5">
     <h2 class="text-center text-primary">Register User</h2>
