@@ -11,41 +11,141 @@ $result = $conn->query($query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User List</title>
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Import jQuery -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        body {
+            background-color: #F6F0F0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container-fluid {
+            padding: 30px;
+            flex-grow: 1;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+            background: white;
+            padding: 30px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: left;
+            color: #735240;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Styling Table */
+        .table {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .table th {
+            background: #735240;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            text-transform: uppercase;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .table td {
+            color: #5A3D2B;
+            text-align: center;
+            vertical-align: middle;
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        .table tbody tr:hover {
+            background: #FDF8F3;
+        }
+
+        /* Delete Button */
+        .btn-danger {
+            background: #D9534F;
+            border: none;
+            padding: 6px 12px;
+            font-size: 14px;
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .btn-danger:hover {
+            background: #C9302C;
+        }
+
+        /* DataTables Styling */
+        .dataTables_wrapper {
+            padding: 20px;
+        }
+
+        .dataTables_length, .dataTables_filter {
+            margin-bottom: 15px;
+        }
+        a {
+            text-decoration: none !important;
+            color: inherit;
+        }
+
+        a:hover, a:focus {
+            text-decoration: none !important;
+        }
+
+
+
+    </style>
 </head>
 <body>
 
-<div class="container mt-5">
-    <h2 class="text-center text-primary">User List</h2>
+<div class="container-fluid">
+    <h2>User List</h2>
 
-    <div class="card shadow p-4">
-        <table class="table table-striped">
-            <thead class="table-light">
+    <div class="card">
+        <table id="userTable" class="table table-striped">
+            <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Contact</th>
-                    <th>Email</th>
-                    <th>Join Date</th>
-                    <th>Action</th>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Contact</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Join Date</th>
+                    <th class="text-center">Action</th>
                 </tr>
             </thead>
-            <tbody id="userTable">
+            <tbody>
                 <?php
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         ?>
                         <tr id="row_<?php echo $row["userId"]; ?>">
-                            <td><?php echo $row["userId"]; ?></td>
-                            <td><?php echo $row["fullName"]; ?></td>
-                            <td><?php echo $row["phoneNumber"]; ?></td>
-                            <td><?php echo $row["email"]; ?></td>
-                            <td><?php echo date("Y/m/d", strtotime($row["createdAt"])); ?></td>
-                            <td>
+                            <td class="text-center"><?php echo $row["userId"]; ?></td>
+                            <td class="text-center"><?php echo $row["fullName"]; ?></td>
+                            <td class="text-center"><?php echo $row["phoneNumber"]; ?></td>
+                            <td class="text-center"><?php echo $row["email"]; ?></td>
+                            <td class="text-center"><?php echo date("Y/m/d", strtotime($row["createdAt"])); ?></td>
+                            <td class="text-center">
                                 <button class="btn btn-danger btn-sm delete-btn" data-id="<?php echo $row['userId']; ?>">
-                                    <i class="bi bi-trash"></i> Delete
+                                    Delete
                                 </button>
                             </td>
                         </tr>
@@ -62,6 +162,13 @@ $result = $conn->query($query);
 
 <script>
 $(document).ready(function() {
+    $("#userTable").DataTable({
+        "paging": true,  
+        "searching": true,  
+        "ordering": false, // Disable sorting globally
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+    });
+
     $(".delete-btn").click(function() {
         var userId = $(this).data("id");
         var row = $("#row_" + userId);
