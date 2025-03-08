@@ -2,7 +2,7 @@
   <style>
     /* Sidebar Base */
     .sidebar {
-      background-color: #F6F0F0 !important; /* Same as header */
+      background-color: #F6F0F0 !important;
       padding: 15px;
       width: 250px;
       min-height: 100vh;
@@ -21,7 +21,7 @@
     }
 
     .sidebar-nav .nav-item a {
-      color: #735240 !important; /* Font color updated */
+      color: #735240 !important;
       font-weight: bold;
       display: flex;
       align-items: center;
@@ -37,35 +37,9 @@
 
     /* Icons */
     .sidebar-nav .nav-item a i {
-      color: #735240 !important; /* Icon color updated */
+      color: #735240 !important;
       font-size: 1.2rem;
       margin-right: 10px;
-    }
-
-    /* Dropdown Menu */
-    .nav-content {
-      list-style: none;
-      padding-left: 20px;
-      margin: 5px 0 0;
-    }
-    
-    .nav-content li a {
-      padding: 8px 15px;
-      font-weight: normal;
-      display: flex;
-      align-items: center;
-      border-radius: 6px;
-      transition: background 0.3s ease;
-      color: #735240 !important; /* Font color updated */
-    }
-    
-    .nav-content li a:hover {
-      background-color: #EAE3E3;
-    }
-    
-    /* Chevron arrow alignment */
-    .ms-auto {
-      margin-left: auto;
     }
   </style>
 </head>
@@ -76,7 +50,7 @@
 
     <!-- Dashboard -->
     <li class="nav-item">
-      <a class="nav-link" href="../dashboard/dashboard.php">
+      <a class="nav-link" href="dashboard.php">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
@@ -91,19 +65,19 @@
       </a>
       <ul id="user-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
         <li>
-          <a class="nav-link" href="../users/add_user.php">
+          <a class="nav-link" href="#" id="loadAddUser">
             <i class="bi bi-person-plus"></i>
             <span>Add User</span>
           </a>
         </li>
         <li>
-          <a class="nav-link" href="../users/user_list.php">
+          <a class="nav-link" href="users/user_list.php">
             <i class="bi bi-list"></i>
             <span>User List</span>
           </a>
         </li>
         <li>
-          <a class="nav-link" href="../users/delete_user.php">
+          <a class="nav-link" href="users/delete_user.php">
             <i class="bi bi-trash"></i>
             <span>Delete User</span>
           </a>
@@ -115,5 +89,16 @@
 </aside><!-- End Sidebar -->
 
 <main id="main" class="main">
-  <!-- Main content goes here -->
+  <!-- Content will be loaded here -->
 </main>
+
+<!-- jQuery for AJAX -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $("#loadAddUser").click(function(event) {
+      event.preventDefault(); // Prevent default link behavior
+      $("#main").load("sidebar/add_user.php"); // Load add_user.php inside #main
+    });
+  });
+</script>
