@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lastName = trim($_POST["last_name"]);
     $email = trim($_POST["email"]);
     $password = trim($_POST["password"]); // Storing password as plaintext (Not recommended)
-    $phoneNumber = trim($_POST["phoneNumber"]);
+    $phoneNumber = trim($_POST["phone"]);
     $gender = $_POST["gender"];
     $birthday = $_POST["birthday"];
     $role = strtolower(trim($_POST["role"]));
@@ -36,18 +36,105 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<div class="container mt-5">
-    <h2 class="text-center text-primary">Register User</h2>
-    <div class="card shadow p-4">
-        <form id="registerUserForm">
-            <div class="mb-3">
-                <label class="form-label">First Name</label>
-                <input type="text" name="first_name" class="form-control" placeholder="Enter first name" required>
-            </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register User</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-            <div class="mb-3">
-                <label class="form-label">Last Name</label>
-                <input type="text" name="last_name" class="form-control" placeholder="Enter last name" required>
+    <style>
+        body {
+            background-color: #F6F0F0; /* Same as sidebar */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            margin: auto;
+            padding: 30px 0;
+            flex-grow: 1;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+            background: white;
+            padding: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #735240; /* Sidebar theme */
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #5A3D2B; /* Sidebar text color */
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid #D5C4B1;
+            background: #FDF8F3; /* Light beige background */
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #735240;
+            box-shadow: 0 0 5px rgba(115, 82, 64, 0.5);
+        }
+
+        .btn-primary {
+            background: #735240; /* Sidebar theme */
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.3s;
+            border-radius: 8px;
+        }
+
+        .btn-primary:hover {
+            background: #5A3D2B;
+        }
+
+        /* Footer styling */
+        .footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            color: #5A3D2B;
+            background: #F6F0F0;
+            border-top: 1px solid #D5C4B1;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Register New User</h2>
+    <div class="card">
+        <form id="registerUserForm">
+            <div class="row mb-3">
+                <div class="col">
+                    <label class="form-label">First Name</label>
+                    <input type="text" name="first_name" class="form-control" placeholder="Enter first name" required>
+                </div>
+                <div class="col">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" name="last_name" class="form-control" placeholder="Enter last name" required>
+                </div>
             </div>
 
             <div class="mb-3">
@@ -61,16 +148,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="mb-3">
-    <label for="yourPhoneNumber" class="form-label">Phone Number</label>
-    <div class="input-group has-validation">
-        <input type="tel" name="phoneNumber" class="form-control" id="yourPhoneNumber"
-            pattern="09[0-9]{9}" minlength="11" maxlength="11"
-            placeholder="Enter 11-digit phone number (09XXXXXXXXX)" required
-            title="Enter a valid 11-digit phone number starting with 09">
-        <div class="invalid-feedback">Please enter a valid 11-digit phone number</div>
-    </div>
-</div>
-
+                <label class="form-label">Phone Number</label>
+                <input type="tel" name="phone" class="form-control" pattern="09[0-9]{9}" minlength="11" maxlength="11"
+                    placeholder="Enter 11-digit phone number (09XXXXXXXXX)" required
+                    title="Enter a valid 11-digit phone number starting with 09">
+                <div class="invalid-feedback">Please enter a valid 11-digit phone number</div>
+            </div>
 
             <div class="mb-3">
                 <label class="form-label">Gender</label>
@@ -97,9 +180,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <button type="submit" class="btn btn-primary w-100">Register</button>
         </form>
-        <div id="userResponse"></div> <!-- Display success or error message -->
+        <div id="userResponse" class="mt-3"></div>
     </div>
 </div>
+
+
 
 <script>
   $(document).ready(function() {
