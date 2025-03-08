@@ -71,17 +71,12 @@
           </a>
         </li>
         <li>
-          <a class="nav-link" href="users/user_list.php">
+          <a class="nav-link" href="#" id="loadUserList">
             <i class="bi bi-list"></i>
             <span>User List</span>
           </a>
         </li>
         <li>
-          <a class="nav-link" href="users/delete_user.php">
-            <i class="bi bi-trash"></i>
-            <span>Delete User</span>
-          </a>
-        </li>
       </ul>
     </li><!-- End User Management Nav -->
 
@@ -96,9 +91,16 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function() {
+    // Load "Add User" page dynamically
     $("#loadAddUser").click(function(event) {
       event.preventDefault(); // Prevent default link behavior
       $("#main").load("sidebar/add_user.php"); // Load add_user.php inside #main
+    });
+
+    // Load "User List" page dynamically
+    $("#loadUserList").click(function(event) {
+      event.preventDefault(); // Prevent default link behavior
+      $("#main").load("sidebar/user_list.php"); // Load user_list.php inside #main
     });
   });
 </script>
