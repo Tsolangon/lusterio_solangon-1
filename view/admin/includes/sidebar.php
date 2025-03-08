@@ -76,75 +76,40 @@
 
     <!-- Dashboard -->
     <li class="nav-item">
-      <a class="nav-link" href="index.html">
+      <a class="nav-link" href="../dashboard/dashboard.php">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
     </li><!-- End Dashboard Nav -->
 
-    <!-- Products -->
+    <!-- User Management -->
     <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#products-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-box-seam"></i>
-        <span>Products</span>
+      <a class="nav-link collapsed" data-bs-target="#user-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-people"></i>
+        <span>User Management</span>
         <i class="bi bi-chevron-down ms-auto"></i>
       </a>
-      <ul id="products-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+      <ul id="user-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
         <li>
-          <a class="nav-link" href="sidebar/add_product.php">
-            <i class="bi bi-plus-circle"></i>
-            <span>Add New Product</span>
+          <a class="nav-link" href="../users/add_user.php">
+            <i class="bi bi-person-plus"></i>
+            <span>Add User</span>
           </a>
         </li>
         <li>
-          <a href="manage-listings.html">
-            <i class="bi bi-list-check"></i>
-            <span>Manage Listings</span>
+          <a class="nav-link" href="../users/user_list.php">
+            <i class="bi bi-list"></i>
+            <span>User List</span>
           </a>
         </li>
         <li>
-          <a href="inventory-tracking.html">
-            <i class="bi bi-archive"></i>
-            <span>Inventory Tracking</span>
+          <a class="nav-link" href="../users/delete_user.php">
+            <i class="bi bi-trash"></i>
+            <span>Delete User</span>
           </a>
         </li>
       </ul>
-    </li><!-- End Products Nav -->
-
-    <!-- Orders -->
-    <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#orders-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-receipt"></i>
-        <span>Orders</span>
-        <i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-      <ul id="orders-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-        <li>
-          <a href="new-orders.html">
-            <i class="bi bi-cart-plus"></i>
-            <span>New Orders</span>
-          </a>
-        </li>
-        <li>
-          <a href="processing-orders.html">
-            <i class="bi bi-hourglass-split"></i>
-            <span>Processing Orders</span>
-          </a>
-        </li>
-        <li>
-          <a href="completed-orders.html">
-            <i class="bi bi-check-circle"></i>
-            <span>Completed Orders</span>
-          </a>
-        </li>
-        <li>
-          <a href="canceled-orders.html">
-            <i class="bi bi-x-circle"></i>
-            <span>Canceled Orders</span>
-          </a>
-        </li>
-      </ul>
-    </li><!-- End Orders Nav -->
+    </li><!-- End User Management Nav -->
 
   </ul>
 </aside><!-- End Sidebar -->
