@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lastName = trim($_POST["last_name"]);
     $email = trim($_POST["email"]);
     $password = trim($_POST["password"]); // Storing password as plaintext (Not recommended)
-    $phoneNumber = trim($_POST["phone"]);
+    $phoneNumber = trim($_POST["phoneNumber"]);
     $gender = $_POST["gender"];
     $birthday = $_POST["birthday"];
     $role = strtolower(trim($_POST["role"]));
@@ -36,9 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-
-
-
 <div class="container mt-5">
     <h2 class="text-center text-primary">Register User</h2>
     <div class="card shadow p-4">
@@ -64,9 +61,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Phone Number</label>
-                <input type="text" name="phone" class="form-control" placeholder="Enter phone number" required>
-            </div>
+    <label for="yourPhoneNumber" class="form-label">Phone Number</label>
+    <div class="input-group has-validation">
+        <input type="tel" name="phoneNumber" class="form-control" id="yourPhoneNumber"
+            pattern="09[0-9]{9}" minlength="11" maxlength="11"
+            placeholder="Enter 11-digit phone number (09XXXXXXXXX)" required
+            title="Enter a valid 11-digit phone number starting with 09">
+        <div class="invalid-feedback">Please enter a valid 11-digit phone number</div>
+    </div>
+</div>
+
 
             <div class="mb-3">
                 <label class="form-label">Gender</label>
