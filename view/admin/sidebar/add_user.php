@@ -203,19 +203,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 <script>
-  $(document).ready(function() {
+$(document).ready(function() {
     $("#registerUserForm").submit(function(event) {
-      event.preventDefault(); // Prevent form submission
+        event.preventDefault(); // Prevent form submission
 
-      $.ajax({
-        url: "sidebar/add_user.php",
-        type: "POST",
-        data: $(this).serialize(), // Send form data
-        success: function(response) {
-          $("#userResponse").html(response); // Show success or error message
-          $("#registerUserForm")[0].reset(); // Clear the form
-        }
-      });
+        $.ajax({
+            url: "sidebar/add_user.php",
+            type: "POST",
+            data: $(this).serialize(), // Send form data
+            success: function(response) {
+                $("#userResponse").html(response).fadeIn(); // Show success message
+
+                // Ensure the message is visible, then fade out after 5 seconds
+                setTimeout(function() {
+                    $("#userResponse").fadeOut("slow", function() {
+                        $(this).html(""); // Clear the message after fading out
+                    });
+                }, 5000);
+
+                $("#registerUserForm")[0].reset(); // Clear the form
+            }
+        });
     });
-  });
+});
 </script>

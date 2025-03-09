@@ -162,13 +162,23 @@ $result = $conn->query($query);
 
 <script>
 $(document).ready(function() {
-    $("#userTable").DataTable({
-        "paging": true,  
-        "searching": true,  
-        "ordering": false, // Disable sorting globally
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-    });
+    setTimeout(function() {
+        $("#userTable").DataTable({
+            "paging": true,  
+            "searching": true,  
+            "ordering": false, // Disable sorting globally
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "responsive": true, // Ensure responsiveness
+            "autoWidth": false, // Prevent width issues
+            "retrieve": true, // Ensure re-initialization doesn't break
+            "initComplete": function() {
+                $("div.dataTables_length").show();
+                $("div.dataTables_filter").show();
+            }
+        });
+    }, 500); // Delay initialization by 500ms to ensure proper loading
 
+    // Delete Button Functionality
     $(".delete-btn").click(function() {
         var userId = $(this).data("id");
         var row = $("#row_" + userId);
@@ -206,6 +216,7 @@ $(document).ready(function() {
         });
     });
 });
+
 </script>
 
 </body>
