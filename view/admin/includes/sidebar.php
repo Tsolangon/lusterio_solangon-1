@@ -41,6 +41,9 @@
       font-size: 1.2rem;
       margin-right: 10px;
     }
+    * {
+    font-weight: bold !important;
+}
   </style>
 </head>
 
@@ -48,13 +51,13 @@
 <aside id="sidebar" class="sidebar">
   <ul class="sidebar-nav" id="sidebar-nav">
 
-    <!-- Dashboard -->
-    <li class="nav-item">
-      <a class="nav-link" href="dashboard.php">
-        <i class="bi bi-grid"></i>
-        <span>Dashboard</span>
-      </a>
-    </li><!-- End Dashboard Nav -->
+<!-- Dashboard -->
+<li class="nav-item">
+  <a class="nav-link" href="#" id="loadDashboard">
+    <i class="bi bi-grid"></i>
+    <span>Dashboard</span>
+  </a>
+</li><!-- End Dashboard Nav -->
 
     <!-- User Management -->
     <li class="nav-item">
@@ -91,16 +94,23 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function() {
+    // Load "Dashboard" page dynamically
+    $("#loadDashboard").click(function(event) {
+      event.preventDefault(); // Prevent default link behavior
+      $("#main").load("sidebar/dashboard.php"); // Load dashboard.php inside #main
+    });
+
     // Load "Add User" page dynamically
     $("#loadAddUser").click(function(event) {
-      event.preventDefault(); // Prevent default link behavior
-      $("#main").load("sidebar/add_user.php"); // Load add_user.php inside #main
+      event.preventDefault();
+      $("#main").load("sidebar/add_user.php");
     });
 
     // Load "User List" page dynamically
     $("#loadUserList").click(function(event) {
-      event.preventDefault(); // Prevent default link behavior
-      $("#main").load("sidebar/user_list.php"); // Load user_list.php inside #main
+      event.preventDefault();
+      $("#main").load("sidebar/user_list.php");
     });
   });
 </script>
+
