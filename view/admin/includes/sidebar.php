@@ -1,5 +1,12 @@
 <head>
   <style>
+            body {
+            background-color: #F6F0F0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+        }
     /* Sidebar Base */
     .sidebar {
       background-color: #F6F0F0 !important;

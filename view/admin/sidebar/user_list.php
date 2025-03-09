@@ -21,14 +21,14 @@ $result = $conn->query($query);
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
+        /* General Body Styling */
         body {
             background-color: #F6F0F0;
-            margin: 0;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
         }
-
         .container-fluid {
             padding: 30px;
             flex-grow: 1;
