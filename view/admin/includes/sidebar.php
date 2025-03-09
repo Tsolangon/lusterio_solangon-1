@@ -55,13 +55,13 @@
 <aside id="sidebar" class="sidebar">
   <ul class="sidebar-nav" id="sidebar-nav">
 
-<!-- Dashboard -->
-<li class="nav-item">
-  <a class="nav-link" href="#" id="loadDashboard">
-    <i class="bi bi-grid"></i>
-    <span>Dashboard</span>
-  </a>
-</li><!-- End Dashboard Nav -->
+    <!-- Dashboard -->
+    <li class="nav-item">
+      <a class="nav-link" href="#" id="loadDashboard">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
 
     <!-- User Management -->
     <li class="nav-item">
@@ -83,9 +83,16 @@
             <span>User List</span>
           </a>
         </li>
-        <li>
       </ul>
     </li><!-- End User Management Nav -->
+
+    <!-- Orders -->
+    <li class="nav-item">
+      <a class="nav-link" href="#" id="loadOrders">
+        <i class="bi bi-cart"></i>
+        <span>Orders</span>
+      </a>
+    </li><!-- End Orders Nav -->
 
   </ul>
 </aside><!-- End Sidebar -->
@@ -100,8 +107,8 @@
   $(document).ready(function() {
     // Load "Dashboard" page dynamically
     $("#loadDashboard").click(function(event) {
-      event.preventDefault(); // Prevent default link behavior
-      $("#main").load("sidebar/dashboard.php"); // Load dashboard.php inside #main
+      event.preventDefault();
+      $("#main").load("sidebar/dashboard.php");
     });
 
     // Load "Add User" page dynamically
@@ -115,6 +122,14 @@
       event.preventDefault();
       $("#main").load("sidebar/user_list.php");
     });
+
+    // Load "Orders" page dynamically
+    $("#loadOrders").click(function(event) {
+      event.preventDefault();
+      $("#main").load("sidebar/orders.php");
+    });
   });
 </script>
+
+
 
