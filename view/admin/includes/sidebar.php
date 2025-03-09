@@ -41,9 +41,6 @@
       font-size: 1.2rem;
       margin-right: 10px;
     }
-    * {
-    font-weight: bold !important;
-}
   </style>
 </head>
 

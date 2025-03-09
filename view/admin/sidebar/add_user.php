@@ -45,78 +45,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register User</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
     <style>
-        body {
-            background-color: #F6F0F0;
-            margin: 0;
+        /* Ensure the page takes the full height */
+        html, body {
+            height: 100%;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            background-color: #F6F0F0;
+            font-family: 'Poppins', sans-serif;
         }
 
+        /* Pushes the content up so the footer stays at the bottom */
         .container {
-            max-width: 500px;
+            flex: 1;
+            max-width: 800px;
             width: 100%;
-            margin: auto;
-            padding: 30px 0;
-            flex-grow: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
+        /* Card Styling */
         .card {
             border: none;
             border-radius: 12px;
-            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.15);
             background: white;
-            padding: 30px;
+            padding: 40px;
         }
 
         h2 {
             text-align: center;
             color: #735240;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            font-size: 28px;
         }
 
+        /* Form Styles */
         .form-label {
             font-weight: bold;
             color: #5A3D2B;
+            font-size: 16px;
         }
 
         .form-control, .form-select {
-            border-radius: 8px;
-            padding: 10px;
+            border-radius: 10px;
+            padding: 12px;
             border: 1px solid #D5C4B1;
             background: #FDF8F3;
+            font-size: 16px;
         }
 
         .form-control:focus, .form-select:focus {
             border-color: #735240;
-            box-shadow: 0 0 5px rgba(115, 82, 64, 0.5);
+            box-shadow: 0 0 8px rgba(115, 82, 64, 0.5);
         }
 
+        /* Button Styling */
         .btn-primary {
             background: #735240;
             border: none;
-            padding: 12px;
-            font-size: 16px;
+            padding: 14px;
+            font-size: 18px;
             font-weight: bold;
-            transition: 0.3s;
-            border-radius: 8px;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            width: 100%;
         }
 
         .btn-primary:hover {
             background: #5A3D2B;
+            transform: scale(1.02);
         }
-
         a {
             text-decoration: none !important;
             color: inherit;
@@ -125,20 +127,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         a:hover, a:focus {
             text-decoration: none !important;
         }
+
+
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                max-width: 90%;
+            }
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h2><a href="#">Register New User</a></h2>
+        <h2>Register New User</h2>
         <div class="card">
             <form id="registerUserForm">
                 <div class="row mb-3">
-                    <div class="col">
+                    <div class="col-md-6">
                         <label class="form-label">First Name</label>
                         <input type="text" name="first_name" class="form-control" placeholder="Enter first name" required>
                     </div>
-                    <div class="col">
+                    <div class="col-md-6">
                         <label class="form-label">Last Name</label>
                         <input type="text" name="last_name" class="form-control" placeholder="Enter last name" required>
                     </div>
@@ -157,23 +168,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="mb-3">
                     <label class="form-label">Phone Number</label>
                     <input type="tel" name="phone" class="form-control" pattern="09[0-9]{9}" minlength="11" maxlength="11"
-                        placeholder="Enter 11-digit phone number (09XXXXXXXXX)" required
-                        title="Enter a valid 11-digit phone number starting with 09">
-                    <div class="invalid-feedback">Please enter a valid 11-digit phone number</div>
+                        placeholder="09XXXXXXXXX" required>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Gender</label>
-                    <select name="gender" class="form-select" required>
-                        <option value="" disabled selected>Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Birthday</label>
-                    <input type="date" name="birthday" class="form-control" required>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Gender</label>
+                        <select name="gender" class="form-select" required>
+                            <option value="" disabled selected>Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Birthday</label>
+                        <input type="date" name="birthday" class="form-control" required>
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -185,14 +195,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-primary w-100">Register</button>
+                <button type="submit" class="btn btn-primary">Register</button>
             </form>
             <div id="userResponse" class="mt-3"></div>
         </div>
     </div>
-</body>
-</html>
-
 
 
 <script>
