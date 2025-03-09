@@ -114,48 +114,48 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>#SKUN111</td>
-                    <td>Oculus VR</td>
-                    <td>June 13, 2021</td>
+                    <td>011</td>
+                    <td>BeadAura</td>
+                    <td>June 13, 2024</td>
                     <td>1455</td>
                     <td>451</td>
                     <td><span class="status status-offer">Offer Process</span></td>
                 </tr>
                 <tr>
-                    <td>#SKUN112</td>
-                    <td>Wall Clock</td>
-                    <td>June 22, 2021</td>
+                    <td>012</td>
+                    <td>CharmWeave</td>
+                    <td>June 22, 2024</td>
                     <td>5555</td>
                     <td>1451</td>
                     <td><span class="status status-sell">Sell</span></td>
                 </tr>
                 <tr>
-                    <td>#SKUN113</td>
-                    <td>Flower Pot</td>
+                    <td>012</td>
+                    <td>BeadVana</td>
                     <td>June 16, 2021</td>
                     <td>555</td>
                     <td>11</td>
                     <td><span class="status status-sell">Sell</span></td>
                 </tr>
                 <tr>
-                    <td>#SKUN114</td>
-                    <td>Port Box</td>
+                    <td>013</td>
+                    <td>LushLoops</td>
                     <td>June 23, 2021</td>
                     <td>7581</td>
                     <td>2468</td>
                     <td><span class="status status-offer">Offer Process</span></td>
                 </tr>
                 <tr>
-                    <td>#SKUN115</td>
-                    <td>School Bag</td>
+                    <td>014</td>
+                    <td>MystiBeads</td>
                     <td>June 18, 2021</td>
                     <td>1581</td>
                     <td>0</td>
                     <td><span class="status status-out">Out of Stock</span></td>
                 </tr>
                 <tr>
-                    <td>#SKUN116</td>
-                    <td>Rado Watch</td>
+                    <td>015</td>
+                    <td>ZenWraps</td>
                     <td>June 13, 2021</td>
                     <td>4581</td>
                     <td>3468</td>
