@@ -1,12 +1,13 @@
 <head>
   <style>
-            body {
+        body {
             background-color: #F6F0F0;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
             font-family: 'Poppins', sans-serif;
         }
+        
     /* Sidebar Base */
     .sidebar {
       background-color: #F6F0F0 !important;
@@ -94,6 +95,14 @@
       </a>
     </li><!-- End Orders Nav -->
 
+    <!-- Inventory -->
+    <li class="nav-item">
+      <a class="nav-link" href="#" id="loadInventory">
+        <i class="bi bi-box-seam"></i>
+        <span>Inventory</span>
+      </a>
+    </li><!-- End Inventory Nav -->
+
   </ul>
 </aside><!-- End Sidebar -->
 
@@ -128,8 +137,11 @@
       event.preventDefault();
       $("#main").load("sidebar/orders.php");
     });
+
+    // Load "Inventory" page dynamically
+    $("#loadInventory").click(function(event) {
+      event.preventDefault();
+      $("#main").load("sidebar/inventory.php");
+    });
   });
 </script>
-
-
-
