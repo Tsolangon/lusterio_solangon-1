@@ -1,5 +1,8 @@
 <?php
-include("../../../dB/config.php");
+include("./includes/header.php");
+include("./includes/topbar.php");
+include("./includes/sidebar.php");
+include("../../dB/config.php");
 
 // Fetch all products
 $result = $conn->query("SELECT * FROM products ORDER BY id ASC");
@@ -154,9 +157,8 @@ $(document).ready(function() {
         let productId = $(this).data("id");
         let newStock = $(this).closest("tr").find(".stock-input").val();
 
-        // AJAX request to update stock only
         $.ajax({
-            url: "sidebar/update_stock.php",
+            url: "update_stock.php",
             type: "POST",
             data: { id: productId, stock_quantity: newStock },
             dataType: "json",
@@ -170,16 +172,19 @@ $(document).ready(function() {
                         showConfirmButton: false
                     });
                 } else {
-                    Swal.fire("Error!", "Failed to update stock.", "error");
+                    Swal.fire("Error!", response.message, "error");
                 }
             },
-            error: function() {
-                Swal.fire("Error!", "An error occurred while updating stock.", "error");
+            error: function(xhr, status, error) {
+                Swal.fire("Error!", "AJAX request failed: " + error, "error");
             }
         });
     });
 });
 </script>
 
+
+</script>
+<?php include("./includes/footer.php"); ?>
 </body>
 </html>

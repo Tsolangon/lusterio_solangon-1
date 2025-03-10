@@ -1,5 +1,8 @@
 <?php
-include("../../../dB/config.php");
+include("./includes/header.php");
+include("./includes/topbar.php");
+include("./includes/sidebar.php");
+include("../../dB/config.php");
 
 // Fetch stock summary
 $stockSummaryQuery = "
@@ -228,6 +231,6 @@ var stockChart = new Chart(ctx, {
     options: { responsive: true, plugins: { legend: { display: false } } }
 });
 </script>
-
+<?php include("./includes/footer.php"); ?>
 </body>
 </html>

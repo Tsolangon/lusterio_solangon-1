@@ -34,7 +34,7 @@
       display: flex;
       align-items: center;
       text-decoration: none;
-      padding: 10px 15px;
+      padding: 10px;
       border-radius: 8px;
       transition: background 0.3s ease;
     }
@@ -46,30 +46,27 @@
     /* Icons */
     .sidebar-nav .nav-item a i {
       color: #735240 !important;
-      font-size: 1.2rem;
-      margin-right: 10px;
     }
 
     /* Greeting Message */
     .greeting {
-      font-size: 20px;
-      font-weight: 500;
-      font-family: Georgia, serif;
-      color: #735240;
-      margin: 9px 0 9px 5px;
-      text-align: left;
+    margin: 9px 0 9px 5px;
+    text-align: left;
+    color: #735240;
+    font-size: 20px; /* Adjust this value as needed */
+    font-family: Georgia, serif;
     }
   </style>
 </head>
 
 <!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
-  <p class="greeting" id="greetingMessage"></p> <!-- Greeting Message -->
-  <ul class="sidebar-nav" id="sidebar-nav">
+  <p class="greeting" id="greetingMessage"></p>
 
+  <ul class="sidebar-nav">
     <!-- Dashboard -->
     <li class="nav-item">
-      <a class="nav-link" href="#" id="loadDashboard">
+      <a class="nav-link" href="dashboard.php">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
@@ -77,7 +74,7 @@
 
     <!-- Inventory -->
     <li class="nav-item">
-      <a class="nav-link" href="#" id="loadInventory">
+      <a class="nav-link" href="inventory.php">
         <i class="bi bi-box"></i>
         <span>Inventory</span>
       </a>
@@ -85,15 +82,15 @@
 
     <!-- Orders -->
     <li class="nav-item">
-      <a class="nav-link" href="#" id="loadOrders">
-        <i class="bi bi-cart"></i>
+      <a class="nav-link" href="sidebar/orders.php">
+        <i class="bi bi-box"></i>
         <span>Orders</span>
       </a>
     </li>
 
     <!-- Add New Product -->
     <li class="nav-item">
-      <a class="nav-link" href="#" id="loadAddProduct">
+      <a class="nav-link" href="sidebar/add_product.php">
         <i class="bi bi-plus-circle"></i>
         <span>Add New Product</span>
       </a>
@@ -101,21 +98,19 @@
 
     <!-- Customer -->
     <li class="nav-item">
-      <a class="nav-link" href="#" id="loadCustomer">
+      <a class="nav-link" href="sidebar/customer.php">
         <i class="bi bi-person"></i>
         <span>Customer</span>
       </a>
     </li>
-
   </ul>
 </aside>
 
 <main id="main" class="main">
-  <!-- Content will be loaded here -->
+  <!-- Main content here -->
 </main>
 
-<!-- jQuery for AJAX -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Greeting script -->
 <script>
   function getGreeting() {
     let hour = new Date().getHours();
@@ -133,32 +128,4 @@
   }
 
   getGreeting();
-
-  $(document).ready(function() {
-    // Load pages dynamically
-    $("#loadDashboard").click(function(event) {
-      event.preventDefault();
-      $("#main").load("sidebar/dashboard.php");
-    });
-
-    $("#loadInventory").click(function(event) {
-      event.preventDefault();
-      $("#main").load("sidebar/inventory.php");
-    });
-
-    $("#loadOrders").click(function(event) {
-      event.preventDefault();
-      $("#main").load("sidebar/orders.php");
-    });
-
-    $("#loadAddProduct").click(function(event) {
-      event.preventDefault();
-      $("#main").load("sidebar/add_product.php");
-    });
-
-    $("#loadCustomer").click(function(event) {
-      event.preventDefault();
-      $("#main").load("sidebar/customer.php");
-    });
-  });
 </script>
