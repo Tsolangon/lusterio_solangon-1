@@ -1,11 +1,9 @@
 CREATE TABLE products (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL,
+    id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    product_name VARCHAR(255) NOT NULL,
+    product_description TEXT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
-    stock INT NOT NULL,
-    size VARCHAR(50) NOT NULL,
-    tags TEXT NOT NULL,
-    images TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    stock_quantity INT(11) NOT NULL,
+    size ENUM('Adjustable', 'Small', 'Medium', 'Large') NOT NULL,
+    date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

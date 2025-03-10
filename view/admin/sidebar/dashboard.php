@@ -1,15 +1,3 @@
-<?php
-include("../../../dB/config.php");
-
-// Fetch data from the database (Example Queries)
-$weekly_sales = 25000;  // Example: Fetch from DB
-$weekly_orders = 45;     // Example: Fetch from DB
-$visitors_online = 12;   // Example: Fetch from DB
-
-// Sample sales data (Modify with real DB queries)
-$sales_data = [1200, 1500, 1300, 2000, 1800, 2200, 1900]; // Example values for the last 7 days
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,54 +6,34 @@ $sales_data = [1200, 1500, 1300, 2000, 1800, 2200, 1900]; // Example values for 
     <title>Admin Dashboard</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
 
     <style>
         body {
             background-color: #F6F0F0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
             font-family: 'Poppins', sans-serif;
         }
 
         .container-fluid {
             padding: 30px;
-            flex-grow: 1;
         }
 
         h2 {
-            text-align: left;
-            color:  #735240;
+            color: #735240;
             font-weight: bold;
-            margin-bottom: 20px;
-            font-size: 28px;
         }
 
-        /* Dashboard Cards */
         .dashboard-card {
-            border: none;
             border-radius: 15px;
             color: white;
             padding: 20px;
             box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .dashboard-card h4 {
-            margin: 0;
-            font-size: 22px;
-        }
+        .card-sales { background: linear-gradient(135deg, #A66E38, #AB886D); }
+        .card-orders { background: linear-gradient(135deg, #A67C52, #6E4E32); }
+        .card-visitors { background: linear-gradient(135deg, #D5B89D, #A47E5C); }
 
-        .dashboard-card .card-footer {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .card-sales { background: linear-gradient(135deg, #A66E38, #AB886D); } /* Brown */
-        .card-orders { background: linear-gradient(135deg, #A67C52, #6E4E32); } /* Coffee */
-        .card-visitors { background: linear-gradient(135deg, #D5B89D, #A47E5C); } /* Beige */
-        /* Chart Container */
         .chart-container {
             background: white;
             padding: 20px;
@@ -73,12 +41,19 @@ $sales_data = [1200, 1500, 1300, 2000, 1800, 2200, 1900]; // Example values for 
             box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .chart-container h4 {
-            font-size: 20px;
-            color: #4E342E;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 20px;
+        .table-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .alert-low-stock {
+            background: #9D5C4A; /* Soft brownish-red */
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
         }
         a {
             text-decoration: none !important;
@@ -88,7 +63,6 @@ $sales_data = [1200, 1500, 1300, 2000, 1800, 2200, 1900]; // Example values for 
         a:hover, a:focus {
             text-decoration: none !important;
         }
-        
     </style>
 </head>
 <body>
@@ -102,7 +76,7 @@ $sales_data = [1200, 1500, 1300, 2000, 1800, 2200, 1900]; // Example values for 
             <div class="card dashboard-card card-sales mb-4">
                 <div class="card-body">
                     <h5>Weekly Sales (₱)</h5>
-                    <h4>₱<?php echo number_format($weekly_sales); ?></h4>
+                    <h4>₱25,000</h4>
                 </div>
             </div>
         </div>
@@ -112,7 +86,7 @@ $sales_data = [1200, 1500, 1300, 2000, 1800, 2200, 1900]; // Example values for 
             <div class="card dashboard-card card-orders mb-4">
                 <div class="card-body">
                     <h5>Weekly Orders</h5>
-                    <h4><?php echo $weekly_orders; ?></h4>
+                    <h4>45</h4>
                 </div>
             </div>
         </div>
@@ -122,53 +96,82 @@ $sales_data = [1200, 1500, 1300, 2000, 1800, 2200, 1900]; // Example values for 
             <div class="card dashboard-card card-visitors mb-4">
                 <div class="card-body">
                     <h5>Visitors Online</h5>
-                    <h4><?php echo $visitors_online; ?></h4>
+                    <h4>12</h4>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Sales Statistics Chart -->
+    <!-- Jewelry Stock Levels -->
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-6">
             <div class="chart-container">
-                <h4>Sales Statistics (Last 7 Days)</h4>
-                <canvas id="salesChart"></canvas>
+                <h4>Jewelry Stock Overview</h4>
+                <canvas id="jewelryStockChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="col-lg-6">
+            <div class="table-container">
+                <h4>Recent Transactions</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Customer</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Krysel Tiempo</td><td>₱1,000</td><td>Mar 5, 2024</td></tr>
+                        <tr><td>2</td><td>Ezra Marinas</td><td>₱500</td><td>Mar 4, 2024</td></tr>
+                        <tr><td>3</td><td>Esther Eblacas</td><td>₱2,200</td><td>Mar 3, 2024</td></tr>
+                        <tr><td>4</td><td>Marisol Datahan</td><td>₱1,900</td><td>Mar 2, 2024</td></tr>
+                        <tr><td>5</td><td>Therese Solangon</td><td>₱6,750</td><td>Mar 1, 2024</td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+
+    <!-- Stock Alerts -->
+    <div class="row mt-4">
+        <div class="col-lg-12">
+            <div class="table-container">
+                <h4>Stock Alerts (Low Stock Items)</h4>
+                <div class="alert-low-stock"><strong>Gold Ring</strong> is running low! Only <strong>4</strong> left in stock.</div>
+                <div class="alert-low-stock"><strong>Silver Necklace</strong> is running low! Only <strong>6</strong> left in stock.</div>
+                <div class="alert-low-stock"><strong>Diamond Bracelet</strong> is running low! Only <strong>3</strong> left in stock.</div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script>
-// Sales Data (from PHP to JavaScript)
-var salesData = <?php echo json_encode($sales_data); ?>;
+// Sample Jewelry Stock Data
+var stockLabels = ["Adjustable", "Small", "Medium", "Large"];
+var stockValues = [20, 35, 50, 25]; // Sample stock values
 
-// Render Chart
-var ctx = document.getElementById("salesChart").getContext("2d");
-var salesChart = new Chart(ctx, {
-    type: "line",
+// Render Jewelry Stock Chart
+var ctx = document.getElementById("jewelryStockChart").getContext("2d");
+var jewelryStockChart = new Chart(ctx, {
+    type: "pie",
     data: {
-        labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        labels: stockLabels,
         datasets: [{
-            label: "Sales (₱)",
-            data: salesData,
-            backgroundColor: "rgba(78, 52, 46, 0.2)",
-            borderColor: "#4E342E",
-            borderWidth: 3,
-            pointRadius: 5,
-            pointHoverRadius: 8,
-            tension: 0.4,
-            fill: true
+            label: "Jewelry Stock",
+            data: stockValues,
+            backgroundColor: ["#735240", "#A66E38", "#D5B89D", "#6E4E32"], /* Matching theme colors */
+            borderWidth: 2
         }]
     },
     options: {
         responsive: true,
         plugins: {
-            legend: { display: false }
-        },
-        scales: {
-            x: { grid: { display: false } },
-            y: { beginAtZero: true, grid: { color: "#E0E0E0" } }
+            legend: { display: true, position: "bottom" }
         }
     }
 });
