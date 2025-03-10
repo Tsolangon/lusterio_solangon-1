@@ -1,7 +1,7 @@
 <?php
 include("../../../dB/config.php"); // Database connection
 
-$query = "SELECT userId, CONCAT(firstName, ' ', lastName) AS fullName, phoneNumber, email, createdAt FROM users ORDER BY createdAt DESC";
+$query = "SELECT userId, CONCAT(firstName, ' ', lastName) AS fullName, phoneNumber, email, role, createdAt FROM users ORDER BY createdAt DESC";
 $result = $conn->query($query);
 ?>
 
@@ -128,34 +128,40 @@ $result = $conn->query($query);
                     <th class="text-center">Name</th>
                     <th class="text-center">Contact</th>
                     <th class="text-center">Email</th>
+                    <th class="text-center">Role</th>
                     <th class="text-center">Join Date</th>
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
-            <tbody>
-                <?php
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        ?>
-                        <tr id="row_<?php echo $row["userId"]; ?>">
-                            <td class="text-center"><?php echo $row["userId"]; ?></td>
-                            <td class="text-center"><?php echo $row["fullName"]; ?></td>
-                            <td class="text-center"><?php echo $row["phoneNumber"]; ?></td>
-                            <td class="text-center"><?php echo $row["email"]; ?></td>
-                            <td class="text-center"><?php echo date("Y/m/d", strtotime($row["createdAt"])); ?></td>
-                            <td class="text-center">
-                                <button class="btn btn-danger btn-sm delete-btn" data-id="<?php echo $row['userId']; ?>">
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                        <?php
-                    }
-                } else {
-                    echo "<tr><td colspan='6' class='text-center'>No users found</td></tr>";
-                }
-                ?>
-            </tbody>
+<tbody>
+    <?php
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            ?>
+            <tr id="row_<?php echo $row["userId"]; ?>">
+                <td class="text-center"><?php echo $row["userId"]; ?></td>
+                <td class="text-center"><?php echo $row["fullName"]; ?></td>
+                <td class="text-center"><?php echo $row["phoneNumber"]; ?></td>
+                <td class="text-center"><?php echo $row["email"]; ?></td>
+                <td class="text-center">
+    <?php echo !empty($row["role"]) ? ucfirst($row["role"]) : "No Role"; ?>
+</td>
+
+                <td class="text-center"><?php echo date("Y/m/d", strtotime($row["createdAt"])); ?></td>
+                <td class="text-center">
+                    <button class="btn btn-danger btn-sm delete-btn" data-id="<?php echo $row['userId']; ?>">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            <?php
+        }
+    } else {
+        echo "<tr><td colspan='7' class='text-center'>No users found</td></tr>";
+    }
+    ?>
+</tbody>
+
         </table>
     </div>
 </div>
