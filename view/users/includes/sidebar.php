@@ -64,37 +64,6 @@
       </a>
     </li><!-- End Dashboard Nav -->
 
-    <!-- User Management -->
-    <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#user-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-people"></i>
-        <span>User Management</span>
-        <i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-      <ul id="user-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-        <li>
-          <a class="nav-link" href="#" id="loadAddUser">
-            <i class="bi bi-person-plus"></i>
-            <span>Add User</span>
-          </a>
-        </li>
-        <li>
-          <a class="nav-link" href="#" id="loadUserList">
-            <i class="bi bi-list"></i>
-            <span>User List</span>
-          </a>
-        </li>
-      </ul>
-    </li><!-- End User Management Nav -->
-
-    <!-- Orders -->
-    <li class="nav-item">
-      <a class="nav-link" href="#" id="loadOrders">
-        <i class="bi bi-cart"></i>
-        <span>Orders</span>
-      </a>
-    </li><!-- End Orders Nav -->
-
     <!-- Inventory -->
     <li class="nav-item">
       <a class="nav-link" href="#" id="loadInventory">
@@ -102,6 +71,14 @@
         <span>Inventory</span>
       </a>
     </li><!-- End Inventory Nav -->
+
+    <!-- Low Stock Alerts -->
+    <li class="nav-item">
+      <a class="nav-link" href="#" id="loadLowStockAlerts">
+        <i class="bi bi-exclamation-triangle"></i>
+        <span>Low Stock Alerts</span>
+      </a>
+    </li><!-- End Low Stock Alerts Nav -->
 
   </ul>
 </aside><!-- End Sidebar -->
@@ -120,25 +97,14 @@ $(document).ready(function() {
         $("#main").load("sidebar/dashboard.php");
     });
 
-    $(document).on("click", "#loadAddUser", function(event) {
-        event.preventDefault();
-        $("#main").load("sidebar/add_user.php");
-    });
-
-    $(document).on("click", "#loadUserList", function(event) {
-        event.preventDefault();
-        $("#main").load("sidebar/user_list.php");
-    });
-
-    $(document).on("click", "#loadOrders", function(event) {
-        event.preventDefault();
-        $("#main").load("sidebar/orders.php");
-    });
-
     $(document).on("click", "#loadInventory", function(event) {
         event.preventDefault();
         $("#main").load("sidebar/inventory.php");
     });
-});
 
+    $(document).on("click", "#loadLowStockAlerts", function(event) {
+        event.preventDefault();
+        $("#main").load("sidebar/low_stock.php");
+    });
+});
 </script>
