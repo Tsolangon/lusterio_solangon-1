@@ -1,13 +1,13 @@
 <head>
   <style>
-    body {
-      background-color: #F6F0F0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      font-family: 'Poppins', sans-serif;
-    }
-
+        body {
+            background-color: #F6F0F0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+        }
+        
     /* Sidebar Base */
     .sidebar {
       background-color: #F6F0F0 !important;
@@ -34,7 +34,7 @@
       display: flex;
       align-items: center;
       text-decoration: none;
-      padding: 10px;
+      padding: 10px 15px;
       border-radius: 8px;
       transition: background 0.3s ease;
     }
@@ -46,86 +46,99 @@
     /* Icons */
     .sidebar-nav .nav-item a i {
       color: #735240 !important;
-    }
-
-    /* Greeting Message */
-    .greeting {
-    margin: 9px 0 9px 5px;
-    text-align: left;
-    color: #735240;
-    font-size: 20px; /* Adjust this value as needed */
-    font-family: Georgia, serif;
+      font-size: 1.2rem;
+      margin-right: 10px;
     }
   </style>
 </head>
 
 <!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
-  <p class="greeting" id="greetingMessage"></p>
+  <ul class="sidebar-nav" id="sidebar-nav">
 
-  <ul class="sidebar-nav">
     <!-- Dashboard -->
     <li class="nav-item">
-      <a class="nav-link" href="dashboard.php">
+      <a class="nav-link" href="#" id="loadDashboard">
         <i class="bi bi-grid"></i>
         <span>Dashboard</span>
       </a>
-    </li>
+    </li><!-- End Dashboard Nav -->
 
-    <!-- Inventory -->
+    <!-- User Management -->
     <li class="nav-item">
-      <a class="nav-link" href="inventory.php">
-        <i class="bi bi-box"></i>
-        <span>Inventory</span>
+      <a class="nav-link collapsed" data-bs-target="#user-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-people"></i>
+        <span>User Management</span>
+        <i class="bi bi-chevron-down ms-auto"></i>
       </a>
-    </li>
+      <ul id="user-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+          <a class="nav-link" href="#" id="loadAddUser">
+            <i class="bi bi-person-plus"></i>
+            <span>Add User</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" href="#" id="loadUserList">
+            <i class="bi bi-list"></i>
+            <span>User List</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End User Management Nav -->
 
     <!-- Orders -->
     <li class="nav-item">
-      <a class="nav-link" href="sidebar/orders.php">
-        <i class="bi bi-box"></i>
+      <a class="nav-link" href="#" id="loadOrders">
+        <i class="bi bi-cart"></i>
         <span>Orders</span>
       </a>
-    </li>
+    </li><!-- End Orders Nav -->
 
-    <!-- Add New Product -->
+    <!-- Inventory -->
     <li class="nav-item">
-      <a class="nav-link" href="sidebar/add_product.php">
-        <i class="bi bi-plus-circle"></i>
-        <span>Add New Product</span>
+      <a class="nav-link" href="#" id="loadInventory">
+        <i class="bi bi-box-seam"></i>
+        <span>Inventory</span>
       </a>
-    </li>
+    </li><!-- End Inventory Nav -->
 
-    <!-- Customer -->
-    <li class="nav-item">
-      <a class="nav-link" href="sidebar/customer.php">
-        <i class="bi bi-person"></i>
-        <span>Customer</span>
-      </a>
-    </li>
   </ul>
-</aside>
+</aside><!-- End Sidebar -->
 
 <main id="main" class="main">
-  <!-- Main content here -->
+  <!-- Content will be loaded here -->
 </main>
 
-<!-- Greeting script -->
+<!-- jQuery for AJAX -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  function getGreeting() {
-    let hour = new Date().getHours();
-    let greeting = "";
+$(document).ready(function() {
+    // Use event delegation to ensure event listeners remain after content loads
+    $(document).on("click", "#loadDashboard", function(event) {
+        event.preventDefault();
+        $("#main").load("sidebar/dashboard.php");
+    });
 
-    if (hour < 12) {
-      greeting = "Hi, Good Morning!";
-    } else if (hour < 18) {
-      greeting = "Hi, Good Afternoon!";
-    } else {
-      greeting = "Hi, Good Evening!";
-    }
+    $(document).on("click", "#loadAddUser", function(event) {
+        event.preventDefault();
+        $("#main").load("sidebar/add_user.php");
+    });
 
-    document.getElementById("greetingMessage").innerText = greeting;
-  }
+    $(document).on("click", "#loadUserList", function(event) {
+        event.preventDefault();
+        $("#main").load("sidebar/user_list.php");
+    });
 
-  getGreeting();
+    $(document).on("click", "#loadOrders", function(event) {
+        event.preventDefault();
+        $("#main").load("sidebar/orders.php");
+    });
+
+    $(document).on("click", "#loadInventory", function(event) {
+        event.preventDefault();
+        $("#main").load("sidebar/inventory.php");
+    });
+});
+
 </script>

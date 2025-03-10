@@ -3,50 +3,57 @@ session_start();
 include("../dB/config.php");
 
 if(isset($_POST["login"])) {
-    $email = trim($_POST["email"]);
-    $password = trim($_POST["password"]);
 
-    // Query to check if user exists
-    $query = "SELECT userId, firstName, lastName, email, password, phoneNumber, gender, birthday, verification, role 
-              FROM users WHERE email = ? AND password = ? LIMIT 1";
-    
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("ss", $email, $password);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $email = $_POST["email"];
+    $password = $_POST["password"];
 
-    if($result->num_rows > 0) {
-        $data = $result->fetch_assoc();
+    $query = "SELECT `userId`, `firstName`, `lastName`, `email`, `password`, `phoneNumber`, `gender`, `birthday`, `verification`, `role` 
+    FROM `users` WHERE email = '$email' AND password = '$password' LIMIT 1";
 
-        $userID = $data["userId"];
-        $fullname = $data["firstName"]." ".$data["lastName"];
-        $emailAddress = $data["email"];
-        $userRole = strtolower($data["role"]); // Convert role to lowercase for consistency
+    $query_run = mysqli_query($conn, $query);
 
-        $_SESSION["auth"] = true;
-        $_SESSION["role"] = $userRole;
-        $_SESSION["authUser"] = [
-            'userId' => $userID, // ✅ Corrected variable name
-            'fullName' => $fullname,
-            'emailAddress' => $emailAddress,
-        ];
+    if($query_run) {
+        if(mysqli_num_rows($query_run) > 0) {
+            $data = mysqli_fetch_assoc($query_run);
 
-        // Redirect based on role
-        if($userRole == 'admin'){
-            header("Location: ../view/admin/index.php");
-        } else if ($userRole == "user"){ 
-            header("Location: ../view/users/dashboard.php");
+
+            $userID = $data["userId"];
+            $fullname = $data["firstName"]." ".$data["lastName"];
+            $emailAddress = $data["email"];
+            $userRole = $data["role"];
+
+            $_SESSION["auth"] = true;
+            $_SESSION["role"] = $userRole;
+            $_SESSION["authUser"] = [
+                'userId' => $userId,
+                'fullName' => $fullname,
+                'emailAddress' => $emailAddress,
+            ];
+
+            if($userRole == 'admin'){
+                header("Location: ../view/admin/index.php");
+            } else if ($userRole == "user"){
+                header("Location: ../view/users/index.php");
+            } else {
+                $_SESSION['message'] = "Invalid Credentials";
+                $_SESSION["code"] = "error";
+                header("Location: ../login.php");
+            }
+            exit();
         } else {
-            $_SESSION['message'] = "Invalid Credentials";
+            $_SESSION['status'] = "There is something wrong";
             $_SESSION["code"] = "error";
             header("Location: ../login.php");
+            exit();
         }
-        exit();
+
     } else {
-        $_SESSION['status'] = "Invalid email or password";
+        $_SESSION['status'] = "Invalid request";
         $_SESSION["code"] = "error";
         header("Location: ../login.php");
         exit();
-    }
+    } 
+    
 }
+include("./includes/footer.php");
 ?>

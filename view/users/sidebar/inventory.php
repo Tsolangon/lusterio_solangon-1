@@ -1,8 +1,5 @@
 <?php
-include("./includes/header.php");
-include("./includes/topbar.php");
-include("./includes/sidebar.php");
-include("../../dB/config.php");
+include("../../../dB/config.php");
 
 // Fetch all products
 $result = $conn->query("SELECT * FROM products ORDER BY id ASC");
@@ -158,7 +155,7 @@ $(document).ready(function() {
         let newStock = $(this).closest("tr").find(".stock-input").val();
 
         $.ajax({
-            url: "update_stock.php",
+            url: "sidebar/update_stock.php",
             type: "POST",
             data: { id: productId, stock_quantity: newStock },
             dataType: "json",
@@ -185,6 +182,5 @@ $(document).ready(function() {
 
 
 </script>
-<?php include("./includes/footer.php"); ?>
 </body>
 </html>

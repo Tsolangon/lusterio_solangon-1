@@ -117,7 +117,7 @@
     // Load "Dashboard" page dynamically
     $("#loadDashboard").click(function(event) {
       event.preventDefault();
-      $("#main").load("sidebar/dashboard.php");
+      $("#main").load("/dashboard.php");
     });
 
     // Load "Add User" page dynamically
