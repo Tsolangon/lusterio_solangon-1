@@ -19,6 +19,7 @@ $result = $conn->query("SELECT * FROM products");
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
     <style>
@@ -78,16 +79,17 @@ $result = $conn->query("SELECT * FROM products");
 
     <div class="table-container">
         <table id="inventoryTable" class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Product Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Stock</th>
-                    <th>Size</th>
-                    <th>Actions</th>
-                </tr>
+        <thead>
+            <tr>
+                <th class="text-center">ID</th>
+                <th class="text-center">Product Name</th>
+                <th class="text-center">Description</th>
+                <th class="text-center">Price</th>
+                <th class="text-center">Stock</th>
+                <th class="text-center">Size</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
             </thead>
             <tbody id="productTableBody">
                 <?php while ($row = $result->fetch_assoc()): ?>
@@ -241,10 +243,20 @@ $(document).ready(function() {
 
     // Handle product deletion via AJAX
     $(document).on("click", ".delete-btn", function() {
-        let productId = $(this).data("id");
-        let row = $(this).closest("tr");
+    let productId = $(this).data("id");
+    let row = $(this).closest("tr");
 
-        if (confirm("Are you sure you want to delete this product?")) {
+    // SweetAlert Confirmation
+    Swal.fire({
+        title: "Are you sure?",
+        text: "This product will be deleted permanently!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
             $.ajax({
                 url: "sidebar/delete_product.php",
                 type: "GET",
@@ -252,17 +264,29 @@ $(document).ready(function() {
                 dataType: "json",
                 success: function(response) {
                     if (response.message === "success") {
-                        row.fadeOut(); // Remove row from table
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "The product has been deleted.",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+
+                        row.fadeOut(500, function() {
+                            $(this).remove();
+                        });
                     } else {
-                        alert(response.message);
+                        Swal.fire("Error!", "Failed to delete the product.", "error");
                     }
                 },
                 error: function() {
-                    alert("An error occurred while deleting the product.");
+                    Swal.fire("Error!", "An error occurred while deleting the product.", "error");
                 }
             });
         }
     });
+});
+
     $(document).ready(function() {
     // Load product data into the edit modal
     $(document).on("click", ".edit-btn", function() {
@@ -333,8 +357,50 @@ $(document).ready(function() {
         });
     });
 });
+$(document).on("click", ".delete-btn", function() {
+    let productId = $(this).data("id");
+    let row = $(this).closest("tr");
 
-    
+    // SweetAlert Confirmation
+    Swal.fire({
+        title: "Are you sure?",
+        text: "This product will be deleted permanently!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "sidebar/delete_product.php",
+                type: "GET",
+                data: { id: productId },
+                dataType: "json",
+                success: function(response) {
+                    if (response.message === "success") {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "The product has been deleted.",
+                            icon: "success",
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+
+                        row.fadeOut(500, function() {
+                            $(this).remove();
+                        });
+                    } else {
+                        Swal.fire("Error!", "Failed to delete the product.", "error");
+                    }
+                },
+                error: function() {
+                    Swal.fire("Error!", "An error occurred while deleting the product.", "error");
+                }
+            });
+        }
+    });
+});
 
     // Hide success message when modal opens again
     $("#addProductModal").on("show.bs.modal", function() {
