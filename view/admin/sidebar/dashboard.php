@@ -1,3 +1,11 @@
+<?php
+include("../../../dB/config.php"); // Connect to database
+
+// Fetch low-stock items (stock_quantity < 5)
+$lowStockQuery = "SELECT product_name, stock_quantity FROM products WHERE stock_quantity < 5";
+$lowStockResult = $conn->query($lowStockQuery);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,14 +62,6 @@
             padding: 10px;
             border-radius: 8px;
             margin-bottom: 10px;
-        }
-        a {
-            text-decoration: none !important;
-            color: inherit;
-        }
-
-        a:hover, a:focus {
-            text-decoration: none !important;
         }
     </style>
 </head>
@@ -141,9 +141,15 @@
         <div class="col-lg-12">
             <div class="table-container">
                 <h4>Stock Alerts (Low Stock Items)</h4>
-                <div class="alert-low-stock"><strong>Gold Ring</strong> is running low! Only <strong>4</strong> left in stock.</div>
-                <div class="alert-low-stock"><strong>Silver Necklace</strong> is running low! Only <strong>6</strong> left in stock.</div>
-                <div class="alert-low-stock"><strong>Diamond Bracelet</strong> is running low! Only <strong>3</strong> left in stock.</div>
+                <?php 
+                if ($lowStockResult->num_rows > 0) {
+                    while ($row = $lowStockResult->fetch_assoc()) {
+                        echo '<div class="alert-low-stock"><strong>' . $row['product_name'] . '</strong> is running low! Only <strong>' . $row['stock_quantity'] . '</strong> left in stock.</div>';
+                    }
+                } else {
+                    echo '<div class="alert-low-stock">No low-stock items at the moment.</div>';
+                }
+                ?>
             </div>
         </div>
     </div>
