@@ -18,6 +18,8 @@ $result = $conn->query("SELECT * FROM products");
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
 
     <style>
         body { background-color: #F6F0F0; font-family: 'Poppins', sans-serif; }
@@ -97,7 +99,12 @@ $result = $conn->query("SELECT * FROM products");
                         <td><?= $row['stock_quantity']; ?></td>
                         <td><?= $row['size']; ?></td>
                         <td>
-                            <button class="btn btn-danger delete-btn" data-id="<?= $row['id']; ?>">Delete</button>
+                            <button class="btn edit-btn" data-id="<?= $row['id']; ?>" data-bs-toggle="modal" data-bs-target="#editProductModal" style="background-color: #5A3D2B; color: white; border: none;">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn delete-btn" data-id="<?= $row['id']; ?>" style="background-color: #D9534F; color: white; border: none;">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
                         </td>
                     </tr>
                 <?php endwhile; ?>
@@ -143,6 +150,42 @@ $result = $conn->query("SELECT * FROM products");
     </div>
 </div>
 
+<!-- Edit Product Modal -->
+<div class="modal fade" id="editProductModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editProductForm">
+                    <input type="hidden" name="id" id="editProductId">
+                    <div class="mb-3"><label>Product Name</label><input type="text" name="product_name" id="editProductName" class="form-control" required></div>
+                    <div class="mb-3"><label>Description</label><textarea name="product_description" id="editProductDescription" class="form-control" required></textarea></div>
+                    <div class="mb-3"><label>Price</label><input type="number" name="price" id="editProductPrice" class="form-control" step="0.01" required></div>
+                    <div class="mb-3"><label>Stock</label><input type="number" name="stock_quantity" id="editProductStock" class="form-control" required></div>
+                    <div class="mb-3">
+                        <label>Size</label>
+                        <select name="size" id="editProductSize" class="form-select" required>
+                            <option value="Adjustable">Adjustable</option>
+                            <option value="Small">Small</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Large">Large</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success">Update Product</button>
+                </form>
+
+                <!-- Success message -->
+                <div id="editSuccessMessage" class="alert alert-success mt-3" style="display: none;">
+                    Product successfully updated!
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 
 $(document).ready(function() {
@@ -164,18 +207,23 @@ $(document).ready(function() {
                     $("#addProductForm")[0].reset();
 
                     let newRow = `
-                        <tr id="row-${response.id}">
-                            <td>${response.id}</td>
-                            <td>${response.product_name}</td>
-                            <td>${response.product_description}</td>
-                            <td>₱${parseFloat(response.price).toFixed(2)}</td>
-                            <td>${response.stock_quantity}</td>
-                            <td>${response.size}</td>
-                            <td>
-                                <button class="btn btn-danger delete-btn" data-id="${response.id}">Delete</button>
-                            </td>
-                        </tr>
-                    `;
+                    <tr id="row-${response.id}">
+                        <td>${response.id}</td>
+                        <td>${response.product_name}</td>
+                        <td>${response.product_description}</td>
+                        <td>₱${parseFloat(response.price).toFixed(2)}</td>
+                        <td>${response.stock_quantity}</td>
+                        <td>${response.size}</td>
+                        <td>
+                            <button class="btn edit-btn" data-id="${response.id}" data-bs-toggle="modal" data-bs-target="#editProductModal" style="background-color: #5A3D2B; color: white; border: none;">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn delete-btn" data-id="${response.id}" style="background-color: #D9534F; color: white; border: none;">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>`;
+
                     $("#productTableBody").append(newRow);
 
                     setTimeout(function() {
@@ -215,6 +263,78 @@ $(document).ready(function() {
             });
         }
     });
+    $(document).ready(function() {
+    // Load product data into the edit modal
+    $(document).on("click", ".edit-btn", function() {
+        let productId = $(this).data("id");
+
+        $.ajax({
+            url: "sidebar/get_product.php",  // This PHP file should return product details in JSON format
+            type: "GET",
+            data: { id: productId },
+            dataType: "json",
+            success: function(product) {
+                $("#editProductId").val(product.id);
+                $("#editProductName").val(product.product_name);
+                $("#editProductDescription").val(product.product_description);
+                $("#editProductPrice").val(product.price);
+                $("#editProductStock").val(product.stock_quantity);
+                $("#editProductSize").val(product.size);
+            },
+            error: function() {
+                alert("Failed to load product details.");
+            }
+        });
+    });
+
+    // Handle product update via AJAX
+    $("#editProductForm").submit(function(event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: "sidebar/update_product.php", // This PHP file should update the product in the database
+            type: "POST",
+            data: $(this).serialize(),
+            dataType: "json",
+            success: function(response) {
+                if (response.message === "success") {
+                    $("#editSuccessMessage").show();
+
+                    // Update the product row in the table
+                    let updatedRow = `
+                        <td>${response.id}</td>
+                        <td>${response.product_name}</td>
+                        <td>${response.product_description}</td>
+                        <td>₱${parseFloat(response.price).toFixed(2)}</td>
+                        <td>${response.stock_quantity}</td>
+                        <td>${response.size}</td>
+                        <td>
+                            <button class="btn btn-primary edit-btn" data-id="${response.id}" data-bs-toggle="modal" data-bs-target="#editProductModal">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger delete-btn" data-id="${response.id}">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    `;
+                    $("#row-" + response.id).html(updatedRow);
+
+                    setTimeout(function() {
+                        $("#editSuccessMessage").fadeOut();
+                        $("#editProductModal").modal("hide");
+                    }, 1000);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function() {
+                alert("An error occurred while updating the product.");
+            }
+        });
+    });
+});
+
+    
 
     // Hide success message when modal opens again
     $("#addProductModal").on("show.bs.modal", function() {
