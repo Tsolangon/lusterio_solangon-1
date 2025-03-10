@@ -26,11 +26,40 @@ $result = $conn->query("SELECT * FROM products");
         .table-container { background: white; padding: 20px; border-radius: 12px; box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1); }
         .table thead th { background: #735240; color: white; text-align: center; font-size: 14px; border: none; }
         .table td { text-align: center; vertical-align: middle; padding: 15px; font-size: 14px; }
+        
+                /* Styling Table */
+        .table {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .table th {
+            background: #735240;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            text-transform: uppercase;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .table td {
+            color: #5A3D2B;
+            text-align: center;
+            vertical-align: middle;
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        .table tbody tr:hover {
+            background: #FDF8F3;
+        }
         a {
             text-decoration: none !important;
             color: inherit;
         }
-
         a:hover, a:focus {
             text-decoration: none !important;
         }
@@ -39,8 +68,11 @@ $result = $conn->query("SELECT * FROM products");
 <body>
 
 <div class="container">
-    <h2>Stock Inventory</h2>
-    <button class="btn btn-success my-3" data-bs-toggle="modal" data-bs-target="#addProductModal">Add Product</button>
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Stock Inventory</h2>
+        <button class="btn" style="background-color: #735240; color: white;" data-bs-toggle="modal" data-bs-target="#addProductModal">
+            + Add Product
+    </div>
 
     <div class="table-container">
         <table id="inventoryTable" class="table table-striped">
@@ -73,6 +105,8 @@ $result = $conn->query("SELECT * FROM products");
         </table>
     </div>
 </div>
+
+
 
 <!-- Add Product Modal -->
 <div class="modal fade" id="addProductModal" tabindex="-1">
@@ -110,9 +144,11 @@ $result = $conn->query("SELECT * FROM products");
 </div>
 
 <script>
-$(document).ready(function() {
-    $("#inventoryTable").DataTable();
 
+$(document).ready(function() {
+    $("#inventoryTable").DataTable({
+        "ordering": false  // Disable sorting for all columns
+    });
     // Handle product addition via AJAX
     $("#addProductForm").submit(function(event) {
         event.preventDefault();
