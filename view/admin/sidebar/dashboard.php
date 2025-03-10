@@ -63,6 +63,13 @@ $lowStockResult = $conn->query($lowStockQuery);
             border-radius: 8px;
             margin-bottom: 10px;
         }
+        a {
+            text-decoration: none !important;
+            color: inherit;
+        }
+        a:hover, a:focus {
+            text-decoration: none !important;
+        }
     </style>
 </head>
 <body>
